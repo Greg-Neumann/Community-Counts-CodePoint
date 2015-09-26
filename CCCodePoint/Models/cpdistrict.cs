@@ -1,4 +1,4 @@
-namespace CCCodePoint
+namespace CCCodePoint.Models
 {
     using System;
     using System.Collections.Generic;
@@ -6,10 +6,10 @@ namespace CCCodePoint
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("ccmaster.cpcounty")]
-    public partial class cpcounty
+    [Table("ccmaster.cpdistrict")]
+    public partial class cpdistrict
     {
-        public cpcounty()
+        public cpdistrict()
         {
             cppostcodes = new HashSet<cppostcode>();
         }
@@ -17,12 +17,18 @@ namespace CCCodePoint
         [Key]
         [Column(TypeName = "char")]
         [StringLength(9)]
-        public string CPCountyCode { get; set; }
+        public string CPDistrictCode { get; set; }
 
         [Required]
         [StringLength(45)]
-        public string CPCountyName { get; set; }
+        public string CPDistrictName { get; set; }
 
         public virtual ICollection<cppostcode> cppostcodes { get; set; }
+    }
+    public class cpdistrict_table
+    {
+        public cpdistrict_table() { }
+        public string CPDistrictCode { get; set; }
+        public string CPDistrictName { get; set; }
     }
 }

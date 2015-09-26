@@ -1,4 +1,4 @@
-namespace CCCodePoint
+namespace CCCodePoint.Models
 {
     using System;
     using System.Collections.Generic;
@@ -24,5 +24,11 @@ namespace CCCodePoint
         public string CPNHSSHAName { get; set; }
 
         public virtual ICollection<cppostcode> cppostcodes { get; set; }
+    }
+    public class cpnhssha_table
+    {
+        public cpnhssha_table() { }
+        public string CPNHSSHACode { get; set; }
+        public string CPNHSSHAName { get; set; }
     }
 }

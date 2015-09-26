@@ -1,4 +1,4 @@
-namespace CCCodePoint
+namespace CCCodePoint.Models
 {
     using System;
     using System.Collections.Generic;

@@ -1,4 +1,4 @@
-namespace CCCodePoint
+namespace CCCodePoint.Models
 {
     using System;
     using System.Collections.Generic;
@@ -6,29 +6,25 @@ namespace CCCodePoint
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("ccmaster.ward")]
-    public partial class ward
+    [Table("ccmaster.nhssha")]
+    public partial class nhssha
     {
-        public ward()
+        public nhssha()
         {
             postcodes = new HashSet<postcode>();
         }
 
         [Key]
-        public int idWardCode { get; set; }
-
-        public int idDistrictCode { get; set; }
+        public int idNHSSHACode { get; set; }
 
         [Column(TypeName = "char")]
         [Required]
-        [StringLength(2)]
-        public string WardCode { get; set; }
+        [StringLength(9)]
+        public string NHSSHACode { get; set; }
 
         [Required]
-        [StringLength(70)]
-        public string Description { get; set; }
-
-        public virtual district district { get; set; }
+        [StringLength(45)]
+        public string NHSSHAName { get; set; }
 
         public virtual ICollection<postcode> postcodes { get; set; }
     }

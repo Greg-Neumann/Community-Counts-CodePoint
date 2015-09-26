@@ -1,4 +1,4 @@
-namespace CCCodePoint
+namespace CCCodePoint.Models
 {
     using System;
     using System.Collections.Generic;
@@ -25,4 +25,11 @@ namespace CCCodePoint
 
         public virtual ICollection<cppostcode> cppostcodes { get; set; }
     }
+    public class cpdistrictward_table
+    {
+        public cpdistrictward_table() { }
+        public string CPDistrictWardCode { get; set; }
+        public string CPDistrictWardName { get; set; }
+    }
+    
 }

@@ -57,26 +57,30 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CodePoint.cs" />
-    <Compile Include="countylist.cs" />
-    <Compile Include="cpcounty.cs" />
-    <Compile Include="cpdistrict.cs" />
-    <Compile Include="cpdistrictward.cs" />
-    <Compile Include="cpnhspansha.cs" />
-    <Compile Include="cpnhssha.cs" />
-    <Compile Include="cppostcode.cs" />
-    <Compile Include="district.cs" />
-    <Compile Include="nhspansha.cs" />
-    <Compile Include="nhssha.cs" />
-    <Compile Include="postcode.cs" />
+    <Compile Include="common.cs" />
+    <Compile Include="loadCodePoint.cs" />
+    <Compile Include="Models\CodePoint.cs" />
+    <Compile Include="Models\countylist.cs" />
+    <Compile Include="Models\cpcounty.cs" />
+    <Compile Include="Models\cpdistrict.cs" />
+    <Compile Include="Models\cpdistrictward.cs" />
+    <Compile Include="Models\cpnhspansha.cs" />
+    <Compile Include="Models\cpnhssha.cs" />
+    <Compile Include="Models\cppostcode.cs" />
+    <Compile Include="Models\district.cs" />
+    <Compile Include="Models\nhspansha.cs" />
+    <Compile Include="Models\nhssha.cs" />
+    <Compile Include="Models\postcode.cs" />
+    <Compile Include="Models\ward.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ward.cs" />
+    <Compile Include="updateCodePoint.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
