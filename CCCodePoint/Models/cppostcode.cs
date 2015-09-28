@@ -11,7 +11,7 @@ namespace CCCodePoint.Models
     {
         [Key]
         [Column("CPPostCode", TypeName = "char")]
-        [StringLength(7)]
+        [StringLength(8)]
         public string CPPostCode1 { get; set; }
 
         public int CPPostCodePQ { get; set; }

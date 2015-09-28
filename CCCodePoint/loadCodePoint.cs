@@ -163,9 +163,16 @@ namespace CCCodePoint
                         {
                             common.messageLog(true, false, true, "CodePoint " + CPNHSSHA + " R.I. link not present for " + cols[6] + " and PostCode " + cols[0]);
                         }
+                        // insert space at 4th from right if none present
+                        string p = cols[0];
+                        if (!cols[0].Contains(" "))
+                        {
+                           p = cols[0].Substring(0, cols[0].Length - 3) + " " + cols[0].Substring(cols[0].Length - 3, 3);
+                        }
                         db.cppostcodes.Add(new cppostcode
                         {
-                            CPPostCode1 = cols[0],
+                            
+                            CPPostCode1 = p, 
                              CPPostCodePQ = Convert.ToInt32(cols[1]),
                               CPPostCodeEA = Convert.ToInt32(cols[2]),
                               CPPostCodeNO = Convert.ToInt32(cols[3]),
