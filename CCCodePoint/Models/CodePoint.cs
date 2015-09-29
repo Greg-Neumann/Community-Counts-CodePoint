@@ -14,6 +14,7 @@ namespace CCCodePoint.Models
 
         public virtual DbSet<countylist> countylists { get; set; }
         public virtual DbSet<cpcounty> cpcounties { get; set; }
+        public virtual DbSet<cpdate> cpdates { get; set; }
         public virtual DbSet<cpdistrict> cpdistricts { get; set; }
         public virtual DbSet<cpdistrictward> cpdistrictwards { get; set; }
         public virtual DbSet<cpnhspansha> cpnhspanshas { get; set; }
@@ -36,8 +37,9 @@ namespace CCCodePoint.Models
                 .IsUnicode(false);
 
             modelBuilder.Entity<countylist>()
-                .HasMany(e => e.districts)
+                .HasMany(e => e.postcodes)
                 .WithRequired(e => e.countylist)
+                .HasForeignKey(e => e.idCountyCode)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<cpcounty>()
@@ -48,10 +50,33 @@ namespace CCCodePoint.Models
                 .Property(e => e.CPCountyName)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<cpcounty>()
-                .HasMany(e => e.cppostcodes)
-                .WithRequired(e => e.cpcounty)
-                .HasForeignKey(e => e.CPPostCodeCC)
+            modelBuilder.Entity<cpdate>()
+                .Property(e => e.CPDate1)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<cpdate>()
+                .HasMany(e => e.countylists)
+                .WithRequired(e => e.cpdate)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<cpdate>()
+                .HasMany(e => e.districts)
+                .WithRequired(e => e.cpdate)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<cpdate>()
+                .HasMany(e => e.nhspanshas)
+                .WithRequired(e => e.cpdate)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<cpdate>()
+                .HasMany(e => e.nhsshas)
+                .WithRequired(e => e.cpdate)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<cpdate>()
+                .HasMany(e => e.wards)
+                .WithRequired(e => e.cpdate)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<cpdistrict>()
@@ -62,12 +87,6 @@ namespace CCCodePoint.Models
                 .Property(e => e.CPDistrictName)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<cpdistrict>()
-                .HasMany(e => e.cppostcodes)
-                .WithRequired(e => e.cpdistrict)
-                .HasForeignKey(e => e.CPPostCodeDC)
-                .WillCascadeOnDelete(false);
-
             modelBuilder.Entity<cpdistrictward>()
                 .Property(e => e.CPDistrictWardCode)
                 .IsUnicode(false);
@@ -75,12 +94,6 @@ namespace CCCodePoint.Models
             modelBuilder.Entity<cpdistrictward>()
                 .Property(e => e.CPDistrictWardName)
                 .IsUnicode(false);
-
-            modelBuilder.Entity<cpdistrictward>()
-                .HasMany(e => e.cppostcodes)
-                .WithRequired(e => e.cpdistrictward)
-                .HasForeignKey(e => e.CPPostCodeWC)
-                .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<cpnhspansha>()
                 .Property(e => e.CPNHSPanSHACode)
@@ -90,12 +103,6 @@ namespace CCCodePoint.Models
                 .Property(e => e.CPNHSPanSHAName)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<cpnhspansha>()
-                .HasMany(e => e.cppostcodes)
-                .WithRequired(e => e.cpnhspansha)
-                .HasForeignKey(e => e.CPPostCodeRH)
-                .WillCascadeOnDelete(false);
-
             modelBuilder.Entity<cpnhssha>()
                 .Property(e => e.CPNHSSHACode)
                 .IsUnicode(false);
@@ -103,12 +110,6 @@ namespace CCCodePoint.Models
             modelBuilder.Entity<cpnhssha>()
                 .Property(e => e.CPNHSSHAName)
                 .IsUnicode(false);
-
-            modelBuilder.Entity<cpnhssha>()
-                .HasMany(e => e.cppostcodes)
-                .WithRequired(e => e.cpnhssha)
-                .HasForeignKey(e => e.CPPostCodeLH)
-                .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<cppostcode>()
                 .Property(e => e.CPPostCode1)
@@ -147,7 +148,7 @@ namespace CCCodePoint.Models
                 .IsUnicode(false);
 
             modelBuilder.Entity<district>()
-                .HasMany(e => e.wards)
+                .HasMany(e => e.postcodes)
                 .WithRequired(e => e.district)
                 .WillCascadeOnDelete(false);
 

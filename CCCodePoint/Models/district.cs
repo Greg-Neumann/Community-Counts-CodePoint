@@ -11,7 +11,7 @@ namespace CCCodePoint.Models
     {
         public district()
         {
-            wards = new HashSet<ward>();
+            postcodes = new HashSet<postcode>();
         }
 
         [Key]
@@ -28,8 +28,10 @@ namespace CCCodePoint.Models
 
         public int idCountyListCode { get; set; }
 
-        public virtual countylist countylist { get; set; }
+        public int idCPDate { get; set; }
 
-        public virtual ICollection<ward> wards { get; set; }
+        public virtual cpdate cpdate { get; set; }
+
+        public virtual ICollection<postcode> postcodes { get; set; }
     }
 }

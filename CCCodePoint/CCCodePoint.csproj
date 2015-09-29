@@ -62,6 +62,7 @@
     <Compile Include="Models\CodePoint.cs" />
     <Compile Include="Models\countylist.cs" />
     <Compile Include="Models\cpcounty.cs" />
+    <Compile Include="Models\cpdate.cs" />
     <Compile Include="Models\cpdistrict.cs" />
     <Compile Include="Models\cpdistrictward.cs" />
     <Compile Include="Models\cpmodels.cs" />

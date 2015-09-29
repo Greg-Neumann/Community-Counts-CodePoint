@@ -36,7 +36,6 @@ namespace CCCodePoint.Models
         public string CPPostCodeLH { get; set; }
 
         [Column(TypeName = "char")]
-        [Required]
         [StringLength(9)]
         public string CPPostCodeCC { get; set; }
 
@@ -49,15 +48,5 @@ namespace CCCodePoint.Models
         [Required]
         [StringLength(9)]
         public string CPPostCodeWC { get; set; }
-
-        public virtual cpcounty cpcounty { get; set; }
-
-        public virtual cpdistrict cpdistrict { get; set; }
-
-        public virtual cpdistrictward cpdistrictward { get; set; }
-
-        public virtual cpnhspansha cpnhspansha { get; set; }
-
-        public virtual cpnhssha cpnhssha { get; set; }
     }
 }

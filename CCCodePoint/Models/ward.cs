@@ -21,14 +21,16 @@ namespace CCCodePoint.Models
 
         [Column(TypeName = "char")]
         [Required]
-        [StringLength(2)]
+        [StringLength(9)]
         public string WardCode { get; set; }
 
         [Required]
         [StringLength(70)]
         public string Description { get; set; }
 
-        public virtual district district { get; set; }
+        public int idCPDate { get; set; }
+
+        public virtual cpdate cpdate { get; set; }
 
         public virtual ICollection<postcode> postcodes { get; set; }
     }

@@ -19,9 +19,19 @@ namespace CCCodePoint.Models
 
         public int idWardCode { get; set; }
 
+        public int idDistrictCode { get; set; }
+
+        public int idCountyCode { get; set; }
+
         public int idNHSHACode { get; set; }
 
         public int idNHSRegHACode { get; set; }
+
+        public int idCPDate { get; set; }
+
+        public virtual countylist countylist { get; set; }
+
+        public virtual district district { get; set; }
 
         public virtual nhspansha nhspansha { get; set; }
 

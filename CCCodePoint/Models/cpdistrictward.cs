@@ -9,11 +9,6 @@ namespace CCCodePoint.Models
     [Table("ccmaster.cpdistrictward")]
     public partial class cpdistrictward
     {
-        public cpdistrictward()
-        {
-            cppostcodes = new HashSet<cppostcode>();
-        }
-
         [Key]
         [Column(TypeName = "char")]
         [StringLength(9)]
@@ -22,9 +17,5 @@ namespace CCCodePoint.Models
         [Required]
         [StringLength(70)]
         public string CPDistrictWardName { get; set; }
-
-        public virtual ICollection<cppostcode> cppostcodes { get; set; }
     }
-    
-    
 }

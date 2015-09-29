@@ -26,6 +26,10 @@ namespace CCCodePoint.Models
         [StringLength(45)]
         public string NHSSHAName { get; set; }
 
+        public int idCPDate { get; set; }
+
+        public virtual cpdate cpdate { get; set; }
+
         public virtual ICollection<postcode> postcodes { get; set; }
     }
 }

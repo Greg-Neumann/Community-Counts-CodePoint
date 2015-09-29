@@ -9,11 +9,6 @@ namespace CCCodePoint.Models
     [Table("ccmaster.cpcounty")]
     public partial class cpcounty
     {
-        public cpcounty()
-        {
-            cppostcodes = new HashSet<cppostcode>();
-        }
-
         [Key]
         [Column(TypeName = "char")]
         [StringLength(9)]
@@ -22,8 +17,5 @@ namespace CCCodePoint.Models
         [Required]
         [StringLength(45)]
         public string CPCountyName { get; set; }
-
-        public virtual ICollection<cppostcode> cppostcodes { get; set; }
     }
-    
 }

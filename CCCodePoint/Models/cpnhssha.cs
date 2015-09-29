@@ -9,11 +9,6 @@ namespace CCCodePoint.Models
     [Table("ccmaster.cpnhssha")]
     public partial class cpnhssha
     {
-        public cpnhssha()
-        {
-            cppostcodes = new HashSet<cppostcode>();
-        }
-
         [Key]
         [Column(TypeName = "char")]
         [StringLength(9)]
@@ -22,7 +17,5 @@ namespace CCCodePoint.Models
         [Required]
         [StringLength(45)]
         public string CPNHSSHAName { get; set; }
-
-        public virtual ICollection<cppostcode> cppostcodes { get; set; }
     }
 }
