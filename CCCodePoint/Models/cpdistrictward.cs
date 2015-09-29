@@ -25,11 +25,6 @@ namespace CCCodePoint.Models
 
         public virtual ICollection<cppostcode> cppostcodes { get; set; }
     }
-    public class cpdistrictward_table
-    {
-        public cpdistrictward_table() { }
-        public string CPDistrictWardCode { get; set; }
-        public string CPDistrictWardName { get; set; }
-    }
+    
     
 }

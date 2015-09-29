@@ -25,10 +25,4 @@ namespace CCCodePoint.Models
 
         public virtual ICollection<cppostcode> cppostcodes { get; set; }
     }
-    public class cpdistrict_table
-    {
-        public cpdistrict_table() { }
-        public string CPDistrictCode { get; set; }
-        public string CPDistrictName { get; set; }
-    }
 }

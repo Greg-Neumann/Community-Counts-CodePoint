@@ -64,6 +64,7 @@
     <Compile Include="Models\cpcounty.cs" />
     <Compile Include="Models\cpdistrict.cs" />
     <Compile Include="Models\cpdistrictward.cs" />
+    <Compile Include="Models\cpmodels.cs" />
     <Compile Include="Models\cpnhspansha.cs" />
     <Compile Include="Models\cpnhssha.cs" />
     <Compile Include="Models\cppostcode.cs" />
