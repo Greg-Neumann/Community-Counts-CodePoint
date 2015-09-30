@@ -108,7 +108,7 @@ namespace CCCodePoint
                         }
                         for (var i = 0; i < cols.Length;i++ )
                         {
-                            cols[i]=cols[i].Trim('"');      // remove any double quotes found from the input data
+                            cols[i] = cols[i].Trim('"');      // remove any double quotes found from the input data
                         }
                         break;
                 }
@@ -140,6 +140,7 @@ namespace CCCodePoint
                         { cols[5]="*";}
                         if (cols[7]=="") // frig absent CPPostCodeCC
                         { cols[7] = "*"; }
+                        cols[0] = cols[0].Replace(" ",String.Empty); // remove all spaces out of postcode
                         //
                         // check R.I. links present
                         //
@@ -165,10 +166,7 @@ namespace CCCodePoint
                         }
                         // insert space at 4th from right if none present
                         string p = cols[0];
-                        if (!cols[0].Contains(" "))
-                        {
-                           p = cols[0].Substring(0, cols[0].Length - 3) + " " + cols[0].Substring(cols[0].Length - 3, 3);
-                        }
+                        p = cols[0].Substring(0, cols[0].Length - 3) + " " + cols[0].Substring(cols[0].Length - 3, 3);
                         db.cppostcodes.Add(new cppostcode
                         {
                             

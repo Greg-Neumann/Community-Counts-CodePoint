@@ -23,7 +23,7 @@ namespace CCCodePoint.Models
         public string NHSPanSHACode { get; set; }
 
         [Required]
-        [StringLength(45)]
+        [StringLength(70)]
         public string NHSPanSHAName { get; set; }
 
         public int idCPDate { get; set; }

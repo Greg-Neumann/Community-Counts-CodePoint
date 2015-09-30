@@ -26,8 +26,6 @@ namespace CCCodePoint.Models
         [StringLength(45)]
         public string Description { get; set; }
 
-        public int idCountyListCode { get; set; }
-
         public int idCPDate { get; set; }
 
         public virtual cpdate cpdate { get; set; }

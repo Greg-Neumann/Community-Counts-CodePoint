@@ -30,7 +30,7 @@ namespace CCCodePoint
                         //
                         if (args.Length==2)
                         {
-                            CPDate = args[2].ToUpper();
+                            CPDate = args[1].ToUpper();
                             if ((CPDate.Length!=7) || (CPDate.Substring(4,1)!="-"))
                             {
                                 common.messageLog(true, false, true, "CodePoint error - " + CPDate + " is an invalid format CodePoint date");

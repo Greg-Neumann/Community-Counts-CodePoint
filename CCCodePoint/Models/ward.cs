@@ -17,8 +17,6 @@ namespace CCCodePoint.Models
         [Key]
         public int idWardCode { get; set; }
 
-        public int idDistrictCode { get; set; }
-
         [Column(TypeName = "char")]
         [Required]
         [StringLength(9)]

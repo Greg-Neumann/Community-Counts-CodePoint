@@ -37,4 +37,10 @@ namespace CCCodePoint.Models
         public string CPNHSSHACode { get; set; }
         public string CPNHSSHAName { get; set; }
     }
+    public class CodePointData
+    {
+        public int id { get; set; }
+        public string name { get; set; }
+        public string code { get; set; }
+    }
 }
