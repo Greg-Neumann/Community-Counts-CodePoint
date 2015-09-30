@@ -194,6 +194,78 @@ namespace CCCodePoint
             common.messageLog(true,false,true,"\nCodePoint has successfully loaded " + (lineNumber-1).ToString() + " lines from " + CPFileName);
             return false; // good exit
         }
+        static int addCCPostCodes(CodePoint db)
+        {
+            //
+            // module responsible for the inserting of Community Counts Special Postcodes into the CodePoint tables.
+            // 
+            // CC1 1CC is for Homeless - no home anywhere at all
+            // CC1 2CC is for No Fixed Abode - has a home, but it is not fixed geographically (e.g. Caravan, Barge)
+            //
+            db.cpcounties.Add(new cpcounty 
+            {
+                CPCountyCode="UK",
+                CPCountyName="All of UK"
+            });
+            db.cpdistricts.Add(new cpdistrict 
+            {
+                CPDistrictCode="CC1",
+                CPDistrictName="Not Geographical"
+            });
+            db.cpdistrictwards.Add(new cpdistrictward 
+            {
+                CPDistrictWardCode = "CC1 1CC",
+                CPDistrictWardName = "Homeless"
+            });
+            db.cpdistrictwards.Add(new cpdistrictward
+            {
+                CPDistrictWardCode = "CC1 2CC",
+                CPDistrictWardName = "No Fixed Abode"
+            });
+            db.cpnhsshas.Add(new cpnhssha 
+            {
+                CPNHSSHACode="CC1 1CC",
+                CPNHSSHAName="Homeless"
+            });
+            db.cpnhsshas.Add(new cpnhssha
+            {
+                CPNHSSHACode = "CC1 2CC",
+                CPNHSSHAName = "No Fixed Abode"
+            });
+            db.cpnhspanshas.Add(new cpnhspansha 
+            {
+                CPNHSPanSHACode = "CC1",
+                CPNHSPanSHAName = "Not Geographical"
+            });
+            db.SaveChanges();
+            db.cppostcodes.Add(new cppostcode 
+            {
+                CPPostCode1 = "CC1 1CC",
+                CPPostCodeCC = "*",
+                CPPostCodeCY = "UK",
+                CPPostCodeDC = "CC1",
+                CPPostCodeWC = "CC1 1CC",
+                CPPostCodeRH = "CC1",
+                CPPostCodeLH = "CC1 1CC",
+                CPPostCodeEA=0,
+                CPPostCodeNO=0,
+                CPPostCodePQ=0
+            });
+            db.cppostcodes.Add(new cppostcode
+            {
+                CPPostCode1 = "CC1 2CC",
+                CPPostCodeCC = "*",
+                CPPostCodeCY = "UK",
+                CPPostCodeDC = "CC1",
+                CPPostCodeWC = "CC1 2CC",
+                CPPostCodeRH = "CC1",
+                CPPostCodeLH = "CC1 2CC",
+                CPPostCodeEA = 0,
+                CPPostCodeNO = 0,
+                CPPostCodePQ = 0
+            });
+            return 0;
+        }
         static int loadInputFiles()
         {
             //
@@ -231,6 +303,7 @@ namespace CCCodePoint
             cpcountytable.Add(new cpcounty_table { CPCountyCode = "*", CPCountyName = "Not Defined in CodePoint Dataset", });
             db.cpnhspanshas.Add(new cpnhspansha { CPNHSPanSHACode = "*", CPNHSPanSHAName = "Not Defined in CodePoint DataSet" });
             cpnhspanshatable.Add(new cpnhspansha_table { CPNHSPanSHACode = "*", CPNHSPanSHAName = "Not Defined in CodePoint DataSet" });
+            addCCPostCodes(db);     // add special postcodes for Community Counts use.
             db.SaveChanges();
             db.Dispose();
             //
