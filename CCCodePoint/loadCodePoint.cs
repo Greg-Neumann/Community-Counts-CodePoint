@@ -75,6 +75,7 @@ namespace CCCodePoint
                     if (firstForFileType)
                     {
                         db.Database.ExecuteSqlCommand("Delete from cppostcode;"); // only do this for first postcode prefix type.
+                        addCCPostCodes(db);
                     }
                     break;
             }
@@ -303,7 +304,6 @@ namespace CCCodePoint
             cpcountytable.Add(new cpcounty_table { CPCountyCode = "*", CPCountyName = "Not Defined in CodePoint Dataset", });
             db.cpnhspanshas.Add(new cpnhspansha { CPNHSPanSHACode = "*", CPNHSPanSHAName = "Not Defined in CodePoint DataSet" });
             cpnhspanshatable.Add(new cpnhspansha_table { CPNHSPanSHACode = "*", CPNHSPanSHAName = "Not Defined in CodePoint DataSet" });
-            addCCPostCodes(db);     // add special postcodes for Community Counts use.
             db.SaveChanges();
             db.Dispose();
             //
