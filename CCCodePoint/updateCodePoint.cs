@@ -245,9 +245,15 @@ namespace CCCodePoint
                 CPDateid = codePointDates.First().idCPDate;                                 // Get the id for this CodePoint Date.
             }
             var postCodesToDo = db.cppostcodes.Where(a=>a.CPPostCode1.CompareTo(pcode)>=0);
-            CodePointData newCounty, newDistrict, newWard, newSHA, newPANSHA;
+            CodePointData newCounty = new CodePointData {code="", id=-1, name=""};
+            CodePointData newDistrict = new CodePointData {code="", id=-1, name=""};
+            CodePointData newWard = new CodePointData {code="", id=-1, name=""};
+            CodePointData newSHA = new CodePointData {code="", id=-1, name=""};
+            CodePointData newPANSHA = new CodePointData {code="", id=-1, name=""};
+              
             int ctrPostCodesAdded = 0, ctrCountyCodeChanged = 0, ctrDistrictCodeChanged = 0, ctrWardCodeChanged = 0, ctrShaCodeChanged = 0, ctrPanShaCodechanged = 0;
             int ctrPostCodesVerified = 0;
+            string lastCC="", lastDC="", lastWC="", lastLH="", lastRH = "";
             postCodesToDo = postCodesToDo.OrderBy(a => a.CPPostCode1); // always process list in postcode alphabetical order
             var counter = 1;
             foreach (var pcodeBeingProcessed in postCodesToDo.ToList())
@@ -255,11 +261,31 @@ namespace CCCodePoint
                 //
                 // Ensure related data exists on related tables inc. ensuring CC descriptions updated to match any changes from CP data.
                 //
-                newCounty = processCounty(pcodeBeingProcessed, CPDateid, db);    // ensure county code present in CC tables
-                newDistrict = processDistrict(pcodeBeingProcessed, CPDateid, db);// ensure district code present in CC tables
-                newWard = processWard(pcodeBeingProcessed, CPDateid, db);// ensure ward code present in CC tables
-                newSHA = processSHA(pcodeBeingProcessed, CPDateid, db);// ensure sha code present in CC tables
-                newPANSHA = processPANSHA(pcodeBeingProcessed, CPDateid, db);// ensure PANsha code present in CC tables
+                if (pcodeBeingProcessed.CPPostCodeCC != lastCC)
+                {
+                    newCounty = processCounty(pcodeBeingProcessed, CPDateid, db);    // ensure county code present in CC tables
+                    lastCC = pcodeBeingProcessed.CPPostCodeCC;
+                }
+                if (pcodeBeingProcessed.CPPostCodeDC != lastDC)
+                { 
+                    newDistrict = processDistrict(pcodeBeingProcessed, CPDateid, db);// ensure district code present in CC tables
+                    lastDC = pcodeBeingProcessed.CPPostCodeDC;
+                }
+                if (pcodeBeingProcessed.CPPostCodeWC != lastWC)
+                { 
+                    newWard = processWard(pcodeBeingProcessed, CPDateid, db);// ensure ward code present in CC tables
+                    lastWC = pcodeBeingProcessed.CPPostCodeWC;
+                }
+                if (pcodeBeingProcessed.CPPostCodeLH != lastLH)
+                {
+                    newSHA = processSHA(pcodeBeingProcessed, CPDateid, db);// ensure sha code present in CC tables
+                    lastLH = pcodeBeingProcessed.CPPostCodeLH;
+                }
+                if (pcodeBeingProcessed.CPPostCodeRH != lastRH)
+                {
+                    newPANSHA = processPANSHA(pcodeBeingProcessed, CPDateid, db);// ensure PANsha code present in CC tables
+                    lastRH = pcodeBeingProcessed.CPPostCodeRH;
+                }
                 //
                 //
                 // Retrieve the current postcode settings
