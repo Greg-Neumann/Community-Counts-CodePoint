@@ -300,10 +300,10 @@ namespace CCCodePoint
             // Code Point dataset may have omitted County Codes and/or Pan SHA Codes (NHS) - allow for null values by using single *;
             //
             CodePoint db = new CodePoint();
-            db.cpcounties.Add(new cpcounty { CPCountyCode = "*", CPCountyName = "Not Defined in CodePoint Dataset" });
-            cpcountytable.Add(new cpcounty_table { CPCountyCode = "*", CPCountyName = "Not Defined in CodePoint Dataset", });
-            db.cpnhspanshas.Add(new cpnhspansha { CPNHSPanSHACode = "*", CPNHSPanSHAName = "Not Defined in CodePoint DataSet" });
-            cpnhspanshatable.Add(new cpnhspansha_table { CPNHSPanSHACode = "*", CPNHSPanSHAName = "Not Defined in CodePoint DataSet" });
+            db.cpcounties.Add(new cpcounty { CPCountyCode = "*", CPCountyName = "(None)" });
+            cpcountytable.Add(new cpcounty_table { CPCountyCode = "*", CPCountyName = "(None)", });
+            db.cpnhspanshas.Add(new cpnhspansha { CPNHSPanSHACode = "*", CPNHSPanSHAName = "(None)" });
+            cpnhspanshatable.Add(new cpnhspansha_table { CPNHSPanSHACode = "*", CPNHSPanSHAName = "(None)" });
             db.SaveChanges();
             db.Dispose();
             //
