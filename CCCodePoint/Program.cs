@@ -57,6 +57,12 @@ namespace CCCodePoint
                                 {
                                     common.messageLog(true, false, true, "CodePoint will resume update from postcode " + pcode);
                                 }
+                                CPDate = args[1].ToUpper();
+                                if ((CPDate.Length != 7) || (CPDate.Substring(4, 1) != "-"))
+                                {
+                                    common.messageLog(true, false, true, "CodePoint error - " + CPDate + " is an invalid format CodePoint date");
+                                    inputValid = false;
+                                }
                                 db.Dispose();
                             }
                             else
