@@ -350,7 +350,7 @@ namespace CCCodePoint
                 counter++;
                 if ((counter -1) % 100 == 0)
                 {
-                    common.messageLog(false,false,false,"..");
+                    common.messageLog(false,false,false,pcodeBeingProcessed.CPPostCode1+",");
                 }
             }
             //
