@@ -11,7 +11,7 @@ namespace CCCodePoint.Models
     {
         public cpdate()
         {
-            countylists = new HashSet<countylist>();
+            countylists = new HashSet<county>();
             districts = new HashSet<district>();
             nhspanshas = new HashSet<nhspansha>();
             nhsshas = new HashSet<nhssha>();
@@ -26,7 +26,7 @@ namespace CCCodePoint.Models
         [StringLength(7)]
         public string CPDate1 { get; set; }
 
-        public virtual ICollection<countylist> countylists { get; set; }
+        public virtual ICollection<county> countylists { get; set; }
 
         public virtual ICollection<district> districts { get; set; }
 

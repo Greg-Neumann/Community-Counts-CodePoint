@@ -12,7 +12,7 @@ namespace CCCodePoint.Models
         {
         }
 
-        public virtual DbSet<countylist> countylists { get; set; }
+        public virtual DbSet<county> counties { get; set; }
         public virtual DbSet<cpcounty> cpcounties { get; set; }
         public virtual DbSet<cpdate> cpdates { get; set; }
         public virtual DbSet<cpdistrict> cpdistricts { get; set; }
@@ -28,17 +28,17 @@ namespace CCCodePoint.Models
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<countylist>()
+            modelBuilder.Entity<county>()
                 .Property(e => e.CountyCode)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<countylist>()
+            modelBuilder.Entity<county>()
                 .Property(e => e.CountyName)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<countylist>()
+            modelBuilder.Entity<county>()
                 .HasMany(e => e.postcodes)
-                .WithRequired(e => e.countylist)
+                .WithRequired(e => e.county)
                 .HasForeignKey(e => e.idCountyCode)
                 .WillCascadeOnDelete(false);
 

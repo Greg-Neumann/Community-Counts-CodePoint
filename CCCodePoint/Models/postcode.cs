@@ -29,7 +29,7 @@ namespace CCCodePoint.Models
 
         public int idCPDate { get; set; }
 
-        public virtual countylist countylist { get; set; }
+        public virtual county county { get; set; }
 
         public virtual district district { get; set; }
 

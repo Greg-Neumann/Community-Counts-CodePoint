@@ -6,10 +6,10 @@ namespace CCCodePoint.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("ccmaster.countylist")]
-    public partial class countylist
+    [Table("ccmaster.county")]
+    public partial class county
     {
-        public countylist()
+        public county()
         {
             postcodes = new HashSet<postcode>();
         }

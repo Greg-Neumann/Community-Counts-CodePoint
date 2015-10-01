@@ -18,19 +18,19 @@ namespace CCCodePoint
             //
             string cname;
             int idCountyCode;
-            var countyRec = db.countylists.Where(a => a.CountyCode == cprec.CPPostCodeCC);
+            var countyRec = db.counties.Where(a => a.CountyCode == cprec.CPPostCodeCC);
             if (!countyRec.Any())
             {
                 // need to add county code to CC database from CodePoint data (cp*)
                 var countyData = db.cpcounties.Find(cprec.CPPostCodeCC);
-                db.countylists.Add(new countylist
+                db.counties.Add(new county
                 {
                     CountyCode = cprec.CPPostCodeCC,
                     CountyName = countyData.CPCountyName,
                     idCPDate = idCodePointDate
                 });
                 db.SaveChanges();
-                idCountyCode = db.countylists.Where(a => a.CountyName == countyData.CPCountyName).First().idCountyListCode;
+                idCountyCode = db.counties.Where(a => a.CountyName == countyData.CPCountyName).First().idCountyListCode;
                 cname = countyData.CPCountyName;
             }
             else    // county code does exist on CC County table
@@ -295,9 +295,9 @@ namespace CCCodePoint
                 {
                     var existingPostCode = existingPostcodes.First();
                     
-                    if (!existingPostCode.countylist.CountyCode.Equals(newCounty.code,StringComparison.Ordinal))   // county codes do not match
+                    if (!existingPostCode.county.CountyCode.Equals(newCounty.code,StringComparison.Ordinal))   // county codes do not match
                     {
-                        common.messageLog(true, false, true, "CodePoint changed County Code for postcode " + existingPostCode.PostCode1 + " from " + existingPostCode.countylist.CountyCode + " to " + newCounty.code);
+                        common.messageLog(true, false, true, "CodePoint changed County Code for postcode " + existingPostCode.PostCode1 + " from " + existingPostCode.county.CountyCode + " to " + newCounty.code);
                         existingPostCode.idCountyCode = newCounty.id;
                         ctrCountyCodeChanged++;
                     }
