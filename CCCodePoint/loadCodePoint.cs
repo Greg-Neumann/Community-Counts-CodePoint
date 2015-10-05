@@ -27,7 +27,7 @@ namespace CCCodePoint
         {
             if (!File.Exists(fullFileName))
             {
-                common.messageLog(true,false,true,"Codepoint file not found in local directory - " + fullFileName);
+                common.messageLog(true,false,true,common.pver+"Codepoint file not found in local directory - " + fullFileName);
                 return true;
             }
             return false;
@@ -36,14 +36,14 @@ namespace CCCodePoint
         {
             if (!Directory.Exists(fullFileName))
             {
-                common.messageLog(true,false,true,"Codepoint directory not found in local directory - " + fullFileName);
+                common.messageLog(true,false,true,common.pver+"Codepoint directory not found in local directory - " + fullFileName);
                 return true;
             }
             return false;
         }
         static Boolean fileNotLoaded (string directoryName, string CPFileName, Boolean firstForFileType)
         {
-            common.messageLog(false,false,true,"CodePoint is processing " + CPFileName);
+            common.messageLog(false,false,true,common.pver+"Processing " + CPFileName);
             var inputRec = File.ReadAllLines(directoryName + CPFileName);
             string[] cols;
             int lineNumber = 1;
@@ -92,9 +92,9 @@ namespace CCCodePoint
                     case (CPNHSSHA) :
                         if (cols.Length!=2)
                         {
-                            common.messageLog(true,false,true,"CodePoint input file format error. " + CPFileName + " should have 2 columns separated by a single comma.");
-                            common.messageLog(true,false,true,"The offending line was at line number " + lineNumber + ". It's content now follows...");
-                            common.messageLog(true,false,true,r);
+                            common.messageLog(true,false,true,common.pver+"CodePoint input file format error. " + CPFileName + " should have 2 columns separated by a single comma.");
+                            common.messageLog(true,false,true,common.pver+"The offending line was at line number " + lineNumber + ". It's content now follows...");
+                            common.messageLog(true,false,true,common.pver+r);
                             return true;
                         }
                         break;
@@ -102,9 +102,9 @@ namespace CCCodePoint
                     default:
                         if (cols.Length != 10)
                         {
-                            common.messageLog(true,false,true,"CodePoint input file format error. " + CPFileName + " should have 10 columns separated by single commas.");
-                            common.messageLog(true,false,true,"The offending line was at line number " + lineNumber + ". It's content now follows...");
-                            common.messageLog(true,false,true,r);
+                            common.messageLog(true,false,true,common.pver+"CodePoint input file format error. " + CPFileName + " should have 10 columns separated by single commas.");
+                            common.messageLog(true,false,true,common.pver+"The offending line was at line number " + lineNumber + ". It's content now follows...");
+                            common.messageLog(true,false,true,common.pver+r);
                             return true;
                         }
                         for (var i = 0; i < cols.Length;i++ )
@@ -147,23 +147,23 @@ namespace CCCodePoint
                         //
                         if (cpcountytable.Find(a=>a.CPCountyCode==cols[7])==null)
                         {
-                            common.messageLog(true,false,true,"CodePoint "+CPCounty+" R.I. link not present for "+ cols[7] + " and PostCode " + cols[0]);
+                            common.messageLog(true,false,true,common.pver+CPCounty+" R.I. link not present for "+ cols[7] + " and PostCode " + cols[0]);
                         }
                         if (cpdistricttable.Find(a=>a.CPDistrictCode==cols[8])==null)
                         {
-                            common.messageLog(true,false,true,"CodePoint "+CPDistrict+" R.I. link not present for "+ cols[8]+ " and PostCode " + cols[0]);
+                            common.messageLog(true,false,true,common.pver+CPDistrict+" R.I. link not present for "+ cols[8]+ " and PostCode " + cols[0]);
                         }
                         if (cpdistrictwardtable.Find(a=>a.CPDistrictWardCode==cols[9])==null)
                         {
-                            common.messageLog(true, false, true, "CodePoint " + CPDistrictWard + " R.I. link not present for " + cols[9] + " and PostCode " + cols[0]);
+                            common.messageLog(true, false, true, common.pver+ CPDistrictWard + " R.I. link not present for " + cols[9] + " and PostCode " + cols[0]);
                         }
                         if (cpnhspanshatable.Find(a=>a.CPNHSPanSHACode==cols[5])==null)
                         {
-                            common.messageLog(true, false, true, "CodePoint " + CPNHSPanSHA + " R.I. link not present for " + cols[5] + " and PostCode " + cols[0]);
+                            common.messageLog(true, false, true, common.pver + CPNHSPanSHA + " R.I. link not present for " + cols[5] + " and PostCode " + cols[0]);
                         }
                         if (cpnhsshatable.Find(a=>a.CPNHSSHACode==cols[6])==null)
                         {
-                            common.messageLog(true, false, true, "CodePoint " + CPNHSSHA + " R.I. link not present for " + cols[6] + " and PostCode " + cols[0]);
+                            common.messageLog(true, false, true, common.pver + CPNHSSHA + " R.I. link not present for " + cols[6] + " and PostCode " + cols[0]);
                         }
                         // insert space at 4th from right if none present
                         string p = cols[0];
@@ -287,7 +287,7 @@ namespace CCCodePoint
             invalid = invalid || directoryNotExists(directoryName + CPPostCode); 
             if (invalid)
             {
-                common.messageLog(true,false,true,"Please ensure all 5 CodePoint csv files and the CPPostCode directory are present before attempting to load CodePoint tables.");
+                common.messageLog(true,false,true,common.pver+"Please ensure all 5 CodePoint csv files and the CPPostCode directory are present before attempting to load CodePoint tables.");
                 return -1;
             }
             
@@ -319,7 +319,7 @@ namespace CCCodePoint
                     firstPostCodePrefix = false;
                     }
             }
-            common.messageLog(true, false, true, "CodePoint has loaded all input data at " + DateTime.Now.ToLongTimeString());
+            common.messageLog(true, false, true,common.pver+ "CodePoint has loaded all input data at " + DateTime.Now.ToLongTimeString());
             if (invalid)
             {return -1;}    // issues during run   
             else 

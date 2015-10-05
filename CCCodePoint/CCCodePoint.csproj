@@ -60,6 +60,7 @@
     <Compile Include="common.cs" />
     <Compile Include="loadCodePoint.cs" />
     <Compile Include="Models\CodePoint.cs" />
+    <Compile Include="Models\CommunityCounts.cs" />
     <Compile Include="Models\county.cs" />
     <Compile Include="Models\cpcounty.cs" />
     <Compile Include="Models\cpdate.cs" />

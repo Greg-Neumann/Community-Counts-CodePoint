@@ -10,7 +10,7 @@ namespace CCCodePoint
 {
     class updateCodePoint
     {
-        public static CodePointData processCounty(cppostcode cprec, int idCodePointDate, CodePoint db)
+        public static CodePointData processCounty(cppostcode cprec, int idCodePointDate, CodePoint db, CommunityCounts db2)
         {
             //
             // ensures that County Code on CC tables exists and is of correct name (allowing for changes from CodePoint data)
@@ -18,19 +18,19 @@ namespace CCCodePoint
             //
             string cname;
             int idCountyCode;
-            var countyRec = db.counties.Where(a => a.CountyCode == cprec.CPPostCodeCC);
+            var countyRec = db2.counties.Where(a => a.CountyCode == cprec.CPPostCodeCC);
             if (!countyRec.Any())
             {
                 // need to add county code to CC database from CodePoint data (cp*)
                 var countyData = db.cpcounties.Find(cprec.CPPostCodeCC);
-                db.counties.Add(new county
+                db2.counties.Add(new county
                 {
                     CountyCode = cprec.CPPostCodeCC,
                     CountyName = countyData.CPCountyName,
                     idCPDate = idCodePointDate
                 });
-                db.SaveChanges();
-                idCountyCode = db.counties.Where(a => a.CountyName == countyData.CPCountyName).First().idCountyListCode;
+                db2.SaveChanges();
+                idCountyCode = db2.counties.Where(a => a.CountyName == countyData.CPCountyName).First().idCountyListCode;
                 cname = countyData.CPCountyName;
             }
             else    // county code does exist on CC County table
@@ -43,14 +43,14 @@ namespace CCCodePoint
                 {
                     county.CountyName = cpCountyName;
                     county.idCPDate = idCodePointDate;
-                    db.Entry(county).State = EntityState.Modified;                  // update county name change
+                    db2.Entry(county).State = EntityState.Modified;                  // update county name change
                 }
                 cname = cpCountyName;
             }
 
             return new CodePointData { id = idCountyCode, name = cname, code=cprec.CPPostCodeCC };
         }
-        public static CodePointData processDistrict(cppostcode cprec, int idCodePointDate, CodePoint db)
+        public static CodePointData processDistrict(cppostcode cprec, int idCodePointDate, CodePoint db, CommunityCounts db2)
         {
             //
             // ensures that District Code on CC tables exists and is of correct name (allowing for changes from CodePoint data)
@@ -58,18 +58,18 @@ namespace CCCodePoint
             //
             string dname;
             int idDistrictCode;
-            var districtRec = db.districts.Where(a => a.DistrictCode == cprec.CPPostCodeDC);    
+            var districtRec = db2.districts.Where(a => a.DistrictCode == cprec.CPPostCodeDC);    
             if (!districtRec.Any())
             {
                 // need to add district code to CC database from CodePoint data (cp*)
                 var districtData=db.cpdistricts.Find(cprec.CPPostCodeDC);
-                db.districts.Add(new district { 
+                db2.districts.Add(new district { 
                     DistrictCode=cprec.CPPostCodeDC,
                     Description=districtData.CPDistrictName,
                     idCPDate=idCodePointDate
                 });
-                db.SaveChanges();
-                idDistrictCode=db.districts.Where(a=>a.Description==districtData.CPDistrictName).First().idDistrictCode;
+                db2.SaveChanges();
+                idDistrictCode=db2.districts.Where(a=>a.Description==districtData.CPDistrictName).First().idDistrictCode;
                 dname = districtData.CPDistrictName;
             }
             else    // district code does exist on CC district table
@@ -82,14 +82,14 @@ namespace CCCodePoint
                 {
                     district.Description = cpDistrictName;
                     district.idCPDate = idCodePointDate;
-                    db.Entry(district).State = EntityState.Modified;                  // update district name change
+                    db2.Entry(district).State = EntityState.Modified;                  // update district name change
                 }
                 dname = cpDistrictName;
             }
 
             return new CodePointData {id=idDistrictCode, name=dname, code=cprec.CPPostCodeDC };
         }
-        public static CodePointData processWard(cppostcode cprec, int idCodePointDate, CodePoint db)
+        public static CodePointData processWard(cppostcode cprec, int idCodePointDate, CodePoint db, CommunityCounts db2)
         {
             //
             // ensures that Ward Code on CC tables exists and is of correct name (allowing for changes from CodePoint data)
@@ -97,19 +97,19 @@ namespace CCCodePoint
             //
             string wname;
             int idWardCode;
-            var wardRec = db.wards.Where(a => a.WardCode == cprec.CPPostCodeWC);
+            var wardRec = db2.wards.Where(a => a.WardCode == cprec.CPPostCodeWC);
             if (!wardRec.Any())
             {
                 // need to add ward code to CC database from CodePoint data (cp*)
                 var wardData = db.cpdistrictwards.Find(cprec.CPPostCodeWC);
-                db.wards.Add(new ward
+                db2.wards.Add(new ward
                 {
                     WardCode = cprec.CPPostCodeWC,
                     Description = wardData.CPDistrictWardName,
                     idCPDate = idCodePointDate
                 });
-                db.SaveChanges();
-                idWardCode = db.wards.Where(a => a.Description == wardData.CPDistrictWardName).First().idWardCode;
+                db2.SaveChanges();
+                idWardCode = db2.wards.Where(a => a.Description == wardData.CPDistrictWardName).First().idWardCode;
                 wname = wardData.CPDistrictWardName;
             }
             else    // ward code does exist on CC district table
@@ -122,14 +122,14 @@ namespace CCCodePoint
                 {
                     ward.Description = cpWardName;
                     ward.idCPDate = idCodePointDate;
-                    db.Entry(ward).State = EntityState.Modified;                  // update ward name change
+                    db2.Entry(ward).State = EntityState.Modified;                  // update ward name change
                 }
                 wname = cpWardName;
             }
 
             return new CodePointData { id = idWardCode, name = wname, code=cprec.CPPostCodeWC };
         }
-        public static CodePointData processSHA(cppostcode cprec, int idCodePointDate, CodePoint db)
+        public static CodePointData processSHA(cppostcode cprec, int idCodePointDate, CodePoint db, CommunityCounts db2)
         {
             //
             // ensures that SHA Code on CC tables exists and is of correct name (allowing for changes from CodePoint data)
@@ -137,19 +137,19 @@ namespace CCCodePoint
             //
             string sname;
             int idSHACode;
-            var nhsshaREC = db.nhsshas.Where(a => a.NHSSHACode == cprec.CPPostCodeLH);
+            var nhsshaREC = db2.nhsshas.Where(a => a.NHSSHACode == cprec.CPPostCodeLH);
             if (!nhsshaREC.Any())
             {
                 // need to add SHA code to CC database from CodePoint data (cp*)
                 var shaData = db.cpnhsshas.Find(cprec.CPPostCodeLH);
-                db.nhsshas.Add(new nhssha
+                db2.nhsshas.Add(new nhssha
                 {
                     NHSSHACode = cprec.CPPostCodeLH,
                     NHSSHAName = shaData.CPNHSSHAName,
                     idCPDate = idCodePointDate
                 });
-                db.SaveChanges();
-                idSHACode = db.nhsshas.Where(a => a.NHSSHAName == shaData.CPNHSSHAName).First().idNHSSHACode;
+                db2.SaveChanges();
+                idSHACode = db2.nhsshas.Where(a => a.NHSSHAName == shaData.CPNHSSHAName).First().idNHSSHACode;
                 sname = shaData.CPNHSSHAName;
             }
             else    // SHA code does exist on CC district table
@@ -162,14 +162,14 @@ namespace CCCodePoint
                 {
                     nhssha.NHSSHAName = cpshaName;
                     nhssha.idCPDate = idCodePointDate;
-                    db.Entry(nhssha).State = EntityState.Modified;                  // update sha name change
+                    db2.Entry(nhssha).State = EntityState.Modified;                  // update sha name change
                 }
                 sname = cpshaName;
             }
 
             return new CodePointData { id = idSHACode, name = sname, code=cprec.CPPostCodeLH };
         }
-        public static CodePointData processPANSHA(cppostcode cprec, int idCodePointDate, CodePoint db)
+        public static CodePointData processPANSHA(cppostcode cprec, int idCodePointDate, CodePoint db, CommunityCounts db2)
         {
             //
             // ensures that PanSHA Code on CC tables exists and is of correct name (allowing for changes from CodePoint data)
@@ -177,19 +177,19 @@ namespace CCCodePoint
             //
             string pname;
             int idPANSHACode;
-            var pannhsREC = db.nhspanshas.Where(a => a.NHSPanSHACode == cprec.CPPostCodeRH);
+            var pannhsREC = db2.nhspanshas.Where(a => a.NHSPanSHACode == cprec.CPPostCodeRH);
             if (!pannhsREC.Any())
             {
                 // need to add PANSHA code to CC database from CodePoint data (cp*)
                 var panshaData = db.cpnhspanshas.Find(cprec.CPPostCodeRH);
-                db.nhspanshas.Add(new nhspansha
+                db2.nhspanshas.Add(new nhspansha
                 {
                     NHSPanSHACode = cprec.CPPostCodeRH,
                     NHSPanSHAName = panshaData.CPNHSPanSHAName,
                     idCPDate = idCodePointDate
                 });
-                db.SaveChanges();
-                idPANSHACode = db.nhspanshas.Where(a => a.NHSPanSHAName == panshaData.CPNHSPanSHAName).First().idNHSPanSHACode;
+                db2.SaveChanges();
+                idPANSHACode = db2.nhspanshas.Where(a => a.NHSPanSHAName == panshaData.CPNHSPanSHAName).First().idNHSPanSHACode;
                 pname = panshaData.CPNHSPanSHAName;
             }
             else    // PANSHA code does exist on CC district table
@@ -202,7 +202,7 @@ namespace CCCodePoint
                 {
                     pannhssha.NHSPanSHAName = cppanshaName;
                     pannhssha.idCPDate = idCodePointDate;
-                    db.Entry(pannhssha).State = EntityState.Modified;                  // update sha name change
+                    db2.Entry(pannhssha).State = EntityState.Modified;                  // update sha name change
                 }
                 pname = cppanshaName;
             }
@@ -210,34 +210,35 @@ namespace CCCodePoint
             return new CodePointData { id = idPANSHACode, name = pname, code=cprec.CPPostCodeRH};
 
         }
-        public static void processUpdate(string CPDate, string pcode) // will be null if all postcodes to be updated
+        public static void processUpdate(string CPDate, string pcode, string dbname, Boolean silentLogging) // will be null if all postcodes to be updated
         {
-            common.messageLog(true, false, true, "CodePoint Update processing will mark all data with CodePoint Date " + CPDate);
+            common.messageLog(true, false, true, common.pver+"Update processing will mark all data with CodePoint Date " + CPDate);
             if (pcode!=null)
             {
-                common.messageLog(true, false, true, "CodePoint will resume processing from (including) postcode " + pcode);
+                common.messageLog(true, false, true,common.pver+ "CodePoint will resume processing from (including) postcode " + pcode);
             }
             else
             {
                 pcode = "";
             }
-            CodePoint db = new CodePoint();     // open the CodePoint database; 
+            CodePoint db = new CodePoint();              // open the CodePoint database; 
+            CommunityCounts db2 = new CommunityCounts(dbname); // open the Community Counts database
             int CPDateid;
             //
-            // process the Code-Point date
+            // process the Code-Point date for this client database
             //
-            var codePointDates = db.cpdates.Where(a => a.CPDate1 == CPDate);
+            var codePointDates = db2.cpdates.Where(a => a.CPDate1 == CPDate);
             if (!codePointDates.Any())
             {
                 //
                 // Add CodePoint date to table and get it's id
                 //
-                db.cpdates.Add(new cpdate
+                db2.cpdates.Add(new cpdate
                     {
                         CPDate1=CPDate
                     });
-                db.SaveChanges();
-                var codePointDate = db.cpdates.Where(a => a.CPDate1 == CPDate).First();     // must be there this time
+                db2.SaveChanges();
+                var codePointDate = db2.cpdates.Where(a => a.CPDate1 == CPDate).First();     // must be there this time
                 CPDateid = codePointDate.idCPDate;                                          // Get the id for this CodePoint Date.
             }
             else
@@ -263,65 +264,80 @@ namespace CCCodePoint
                 //
                 if (pcodeBeingProcessed.CPPostCodeCC != lastCC)
                 {
-                    newCounty = processCounty(pcodeBeingProcessed, CPDateid, db);    // ensure county code present in CC tables
+                    newCounty = processCounty(pcodeBeingProcessed, CPDateid,db, db2);    // ensure county code present in CC tables
                     lastCC = pcodeBeingProcessed.CPPostCodeCC;
                 }
                 if (pcodeBeingProcessed.CPPostCodeDC != lastDC)
                 { 
-                    newDistrict = processDistrict(pcodeBeingProcessed, CPDateid, db);// ensure district code present in CC tables
+                    newDistrict = processDistrict(pcodeBeingProcessed, CPDateid, db, db2);// ensure district code present in CC tables
                     lastDC = pcodeBeingProcessed.CPPostCodeDC;
                 }
                 if (pcodeBeingProcessed.CPPostCodeWC != lastWC)
                 { 
-                    newWard = processWard(pcodeBeingProcessed, CPDateid, db);// ensure ward code present in CC tables
+                    newWard = processWard(pcodeBeingProcessed, CPDateid, db, db2);// ensure ward code present in CC tables
                     lastWC = pcodeBeingProcessed.CPPostCodeWC;
                 }
                 if (pcodeBeingProcessed.CPPostCodeLH != lastLH)
                 {
-                    newSHA = processSHA(pcodeBeingProcessed, CPDateid, db);// ensure sha code present in CC tables
+                    newSHA = processSHA(pcodeBeingProcessed, CPDateid,db, db2);// ensure sha code present in CC tables
                     lastLH = pcodeBeingProcessed.CPPostCodeLH;
                 }
                 if (pcodeBeingProcessed.CPPostCodeRH != lastRH)
                 {
-                    newPANSHA = processPANSHA(pcodeBeingProcessed, CPDateid, db);// ensure PANsha code present in CC tables
+                    newPANSHA = processPANSHA(pcodeBeingProcessed, CPDateid, db, db2);// ensure PANsha code present in CC tables
                     lastRH = pcodeBeingProcessed.CPPostCodeRH;
                 }
                 //
                 //
                 // Retrieve the current postcode settings
                 //
-                var existingPostcodes = db.postcodes.Where(a=>a.PostCode1==pcodeBeingProcessed.CPPostCode1);  
+                var existingPostcodes = db2.postcodes.Where(a=>a.PostCode1==pcodeBeingProcessed.CPPostCode1);  
                 if (existingPostcodes.Any()) // post code already exists in CC postcode database
                 {
                     var existingPostCode = existingPostcodes.First();
                     
                     if (!existingPostCode.county.CountyCode.Equals(newCounty.code,StringComparison.Ordinal))   // county codes do not match
                     {
-                        common.messageLog(true, false, true, "CodePoint changed County Code for postcode " + existingPostCode.PostCode1 + " from " + existingPostCode.county.CountyCode + " to " + newCounty.code);
+                        if (!silentLogging)
+                        {
+                            common.messageLog(true, false, true, common.pver+"Changed County Code for postcode " + existingPostCode.PostCode1 + " from " + existingPostCode.county.CountyCode + " to " + newCounty.code);
+                        }
                         existingPostCode.idCountyCode = newCounty.id;
                         ctrCountyCodeChanged++;
                     }
                     if (!existingPostCode.district.DistrictCode.Equals(newDistrict.code,StringComparison.Ordinal))   // District names ids do not match
                     {
-                        common.messageLog(true, false, true, "CodePoint changed District Code for postcode " + existingPostCode.PostCode1 + " from " + existingPostCode.district.DistrictCode + " to " + newDistrict.code);
+                        if (!silentLogging)
+                        {
+                            common.messageLog(true, false, true,common.pver+ "Changed District Code for postcode " + existingPostCode.PostCode1 + " from " + existingPostCode.district.DistrictCode + " to " + newDistrict.code);
+                        }
                         existingPostCode.idDistrictCode = newDistrict.id;
                         ctrDistrictCodeChanged++;
                     }
                     if (!existingPostCode.ward.WardCode.Equals(newWard.code, StringComparison.Ordinal))   // Ward names ids do not match
                     {
-                        common.messageLog(true, false, true, "CodePoint changed Ward Code for postcode " + existingPostCode.PostCode1 + " from " + existingPostCode.ward.WardCode + " to " + newWard.code);
+                        if (!silentLogging)
+                        {
+                            common.messageLog(true, false, true,common.pver+ "Changed Ward Code for postcode " + existingPostCode.PostCode1 + " from " + existingPostCode.ward.WardCode + " to " + newWard.code);
+                        }
                         existingPostCode.idWardCode = newWard.id;
                         ctrWardCodeChanged++;
                     }
                     if (!existingPostCode.nhssha.NHSSHACode.Equals(newSHA.code, StringComparison.Ordinal))   // SHA names ids do not match
                     {
-                        common.messageLog(true, false, true, "CodePoint changed NHS SHA Code for postcode " + existingPostCode.PostCode1 + " from " + existingPostCode.nhssha.NHSSHACode + " to " + newSHA.code);
+                        if (!silentLogging)
+                        {
+                            common.messageLog(true, false, true,common.pver+ "Cchanged NHS SHA Code for postcode " + existingPostCode.PostCode1 + " from " + existingPostCode.nhssha.NHSSHACode + " to " + newSHA.code);
+                        }
                         existingPostCode.idNHSHACode = newSHA.id;
                         ctrShaCodeChanged++;
                     }
                     if (!existingPostCode.nhspansha.NHSPanSHACode.Equals(newPANSHA.code, StringComparison.Ordinal))   // PAN SHA names ids do not match
                     {
-                        common.messageLog(true, false, true, "CodePoint changed NHS Pan SHA Code for postcode " + existingPostCode.PostCode1 + " from " + existingPostCode.nhspansha.NHSPanSHACode + " to " + newPANSHA.code);
+                        if (!silentLogging)
+                        {
+                            common.messageLog(true, false, true, common.pver+"Changed NHS Pan SHA Code for postcode " + existingPostCode.PostCode1 + " from " + existingPostCode.nhspansha.NHSPanSHACode + " to " + newPANSHA.code);
+                        }
                         existingPostCode.idNHSRegHACode = newPANSHA.id;
                         ctrPanShaCodechanged++;
                     }
@@ -329,12 +345,12 @@ namespace CCCodePoint
                     // mark postcode as having been updated (checked) to current Code-Point id (date)
                     //
                     existingPostCode.idCPDate = CPDateid;
-                    db.Entry(existingPostCode).State = EntityState.Modified;
+                    db2.Entry(existingPostCode).State = EntityState.Modified;
                     ctrPostCodesVerified++;
                 }
                 else                                // post code does NOT already exist in postcode database
                 {
-                    db.postcodes.Add(new postcode { 
+                    db2.postcodes.Add(new postcode { 
                         PostCode1=pcodeBeingProcessed.CPPostCode1,
                         idWardCode=newWard.id,
                         idDistrictCode=newDistrict.id,
@@ -346,7 +362,7 @@ namespace CCCodePoint
                     ctrPostCodesAdded++;
                    
                 }
-                db.SaveChanges();                                                                               // commit postcode addition or changes
+                db2.SaveChanges();                                                                               // commit postcode addition or changes
                 counter++;
                 if ((counter -1) % 100 == 0)
                 {
@@ -356,14 +372,14 @@ namespace CCCodePoint
             //
             // done all postcodes in the CodePoint dataset
             //
-            common.messageLog(true, false, true, "CodePoint has updated all Postcodes on Community Counts from CodePoint  with marker " + CPDate+" at "+DateTime.Now.ToLongTimeString());
-            common.messageLog(true, false, true, "Number of Postcodes verified  :" + ctrPostCodesVerified);
-            common.messageLog(true, false, true, "Number of Postcodes added     :" + ctrPostCodesAdded);
-            common.messageLog(true, false, true, "Number of Postcodes where County changed : " + ctrCountyCodeChanged);
-            common.messageLog(true, false, true, "Number of PostCodes where District changed : " + ctrDistrictCodeChanged);
-            common.messageLog(true, false, true, "Number of PostCodes where Ward changed : " + ctrWardCodeChanged);
-            common.messageLog(true, false, true, "Number of PostCodes where NHS SHA changed : " + ctrShaCodeChanged);
-            common.messageLog(true, false, true, "Number of PostCodes where NHS Pan SHA changed : " + ctrPanShaCodechanged);
+            common.messageLog(true, false, true, common.pver+"CodePoint has updated all Postcodes on Community Counts from CodePoint  with marker " + CPDate+" at "+DateTime.Now.ToLongTimeString());
+            common.messageLog(true, false, true,common.pver+ "Number of Postcodes verified  :" + ctrPostCodesVerified);
+            common.messageLog(true, false, true,common.pver+ "Number of Postcodes added     :" + ctrPostCodesAdded);
+            common.messageLog(true, false, true,common.pver+ "Number of Postcodes where County changed : " + ctrCountyCodeChanged);
+            common.messageLog(true, false, true, common.pver+"Number of PostCodes where District changed : " + ctrDistrictCodeChanged);
+            common.messageLog(true, false, true,common.pver+ "Number of PostCodes where Ward changed : " + ctrWardCodeChanged);
+            common.messageLog(true, false, true, common.pver+"Number of PostCodes where NHS SHA changed : " + ctrShaCodeChanged);
+            common.messageLog(true, false, true, common.pver+"Number of PostCodes where NHS Pan SHA changed : " + ctrPanShaCodechanged);
         }
     }
 }

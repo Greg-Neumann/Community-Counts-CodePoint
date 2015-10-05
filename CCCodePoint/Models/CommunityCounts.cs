@@ -5,21 +5,31 @@ namespace CCCodePoint.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
 
-    public partial class CodePoint : DbContext
+    public partial class CommunityCounts : DbContext
     {
-        public CodePoint()
-            : base("name=CodePoint")
+        public CommunityCounts()
+            : base()
         {
+        }
+        public CommunityCounts (string dbname) : base(GetConnectionString(dbname)) { }
+        public static string GetConnectionString(string dbname)
+        {
+            switch (dbname)
+            {
+                case "ccbhlc":
+                    return "name=ccbhlc";
+                case "cccrow":
+                    return "name=cccrow";
+                case "ccsydn":
+                    return "name=ccsydn";
+                default :
+                    throw new ArgumentOutOfRangeException("logon domain name not recognised");
+
+            }
         }
 
         public virtual DbSet<county> counties { get; set; }
-        public virtual DbSet<cpcounty> cpcounties { get; set; }
         public virtual DbSet<cpdate> cpdates { get; set; }
-        public virtual DbSet<cpdistrict> cpdistricts { get; set; }
-        public virtual DbSet<cpdistrictward> cpdistrictwards { get; set; }
-        public virtual DbSet<cpnhspansha> cpnhspanshas { get; set; }
-        public virtual DbSet<cpnhssha> cpnhsshas { get; set; }
-        public virtual DbSet<cppostcode> cppostcodes { get; set; }
         public virtual DbSet<district> districts { get; set; }
         public virtual DbSet<nhspansha> nhspanshas { get; set; }
         public virtual DbSet<nhssha> nhsshas { get; set; }
@@ -42,17 +52,14 @@ namespace CCCodePoint.Models
                 .HasForeignKey(e => e.idCountyCode)
                 .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<cpcounty>()
-                .Property(e => e.CPCountyCode)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<cpcounty>()
-                .Property(e => e.CPCountyName)
-                .IsUnicode(false);
-
             modelBuilder.Entity<cpdate>()
                 .Property(e => e.CPDate1)
                 .IsUnicode(false);
+
+            modelBuilder.Entity<cpdate>()
+                .HasMany(e => e.counties)
+                .WithRequired(e => e.cpdate)
+                .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<cpdate>()
                 .HasMany(e => e.districts)
@@ -73,66 +80,6 @@ namespace CCCodePoint.Models
                 .HasMany(e => e.wards)
                 .WithRequired(e => e.cpdate)
                 .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<cpdistrict>()
-                .Property(e => e.CPDistrictCode)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<cpdistrict>()
-                .Property(e => e.CPDistrictName)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<cpdistrictward>()
-                .Property(e => e.CPDistrictWardCode)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<cpdistrictward>()
-                .Property(e => e.CPDistrictWardName)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<cpnhspansha>()
-                .Property(e => e.CPNHSPanSHACode)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<cpnhspansha>()
-                .Property(e => e.CPNHSPanSHAName)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<cpnhssha>()
-                .Property(e => e.CPNHSSHACode)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<cpnhssha>()
-                .Property(e => e.CPNHSSHAName)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<cppostcode>()
-                .Property(e => e.CPPostCode1)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<cppostcode>()
-                .Property(e => e.CPPostCodeCY)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<cppostcode>()
-                .Property(e => e.CPPostCodeRH)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<cppostcode>()
-                .Property(e => e.CPPostCodeLH)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<cppostcode>()
-                .Property(e => e.CPPostCodeCC)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<cppostcode>()
-                .Property(e => e.CPPostCodeDC)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<cppostcode>()
-                .Property(e => e.CPPostCodeWC)
-                .IsUnicode(false);
 
             modelBuilder.Entity<district>()
                 .Property(e => e.DistrictCode)
