@@ -29,6 +29,7 @@ namespace CCCodePoint
                     CountyName = countyData.CPCountyName,
                     idCPDate = idCodePointDate
                 });
+                db2.SaveChanges();
                 idCountyCode = db2.counties.Where(a => a.CountyName == countyData.CPCountyName).First().idCountyListCode;
                 cname = countyData.CPCountyName;
             }
@@ -67,6 +68,7 @@ namespace CCCodePoint
                     Description=districtData.CPDistrictName,
                     idCPDate=idCodePointDate
                 });
+                db2.SaveChanges();
                 idDistrictCode=db2.districts.Where(a=>a.Description==districtData.CPDistrictName).First().idDistrictCode;
                 dname = districtData.CPDistrictName;
             }
@@ -106,6 +108,7 @@ namespace CCCodePoint
                     Description = wardData.CPDistrictWardName,
                     idCPDate = idCodePointDate
                 });
+                db2.SaveChanges();
                 idWardCode = db2.wards.Where(a => a.Description == wardData.CPDistrictWardName).First().idWardCode;
                 wname = wardData.CPDistrictWardName;
             }
@@ -145,6 +148,7 @@ namespace CCCodePoint
                     NHSSHAName = shaData.CPNHSSHAName,
                     idCPDate = idCodePointDate
                 });
+                db2.SaveChanges();
                 idSHACode = db2.nhsshas.Where(a => a.NHSSHAName == shaData.CPNHSSHAName).First().idNHSSHACode;
                 sname = shaData.CPNHSSHAName;
             }
@@ -184,6 +188,7 @@ namespace CCCodePoint
                     NHSPanSHAName = panshaData.CPNHSPanSHAName,
                     idCPDate = idCodePointDate
                 });
+                db2.SaveChanges();
                 idPANSHACode = db2.nhspanshas.Where(a => a.NHSPanSHAName == panshaData.CPNHSPanSHAName).First().idNHSPanSHACode;
                 pname = panshaData.CPNHSPanSHAName;
             }
@@ -232,6 +237,7 @@ namespace CCCodePoint
                     {
                         CPDate1=CPDate
                     });
+                db2.SaveChanges();
                 var codePointDate = db2.cpdates.Where(a => a.CPDate1 == CPDate).First();     // must be there this time
                 CPDateid = codePointDate.idCPDate;                                          // Get the id for this CodePoint Date.
             }

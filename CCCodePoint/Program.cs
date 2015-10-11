@@ -22,6 +22,7 @@ namespace CCCodePoint
                 case "ccbhlc": return true;
                 case "cccrow": return true;
                 case "ccsydn": return true;
+                case "ccmaster": return true;
                 default:
                     common.messageLog(true,false,true,common.pver+"CodePoint database name >" + dbname + "< invalid");
                     return false;

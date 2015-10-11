@@ -22,6 +22,8 @@ namespace CCCodePoint.Models
                     return "name=cccrow";
                 case "ccsydn":
                     return "name=ccsydn";
+                case "ccmaster":
+                    return "name=ccmaster";
                 default :
                     throw new ArgumentOutOfRangeException("logon domain name not recognised");
 
