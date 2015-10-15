@@ -375,12 +375,16 @@ namespace CCCodePoint
                 counter++;
                 if ((counter -1) % 1000 == 0)
                 {
+                    db2.ChangeTracker.DetectChanges();              // because Configuration.AutoDetectChangesEnabled = false;
                     db2.SaveChanges();                              // commit postcode addition or changes
                     db2.Dispose();                                  // dispose of Community Counts to improve performance
                     db2 = open_CC_DB(dbname);       // open the Community Counts database;
                     common.messageLog(false,false,false,pcodeBeingProcessed.CPPostCode1+",");
                 }
             }
+            db2.ChangeTracker.DetectChanges();              // because Configuration.AutoDetectChangesEnabled = false;
+            db2.SaveChanges();                              // commit postcode addition or changes
+            db2.Dispose();                                  // dispose of Community Counts to improve performance
             //
             // done all postcodes in the CodePoint dataset
             //
