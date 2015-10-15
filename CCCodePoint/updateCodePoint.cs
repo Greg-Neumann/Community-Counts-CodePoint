@@ -210,6 +210,16 @@ namespace CCCodePoint
             return new CodePointData { id = idPANSHACode, name = pname, code=cprec.CPPostCodeRH};
 
         }
+        public static CommunityCounts open_CC_DB(string dbname)
+        {
+            //
+            // Opens the community counts database context in an efficient manner for mass updating.inserting
+            // 
+            CommunityCounts db2 = new CommunityCounts(dbname); // open the Community Counts database
+            db2.Configuration.AutoDetectChangesEnabled = false; // performance improvement
+            db2.Configuration.ValidateOnSaveEnabled = false;    // performance improvement
+            return db2;
+        }
         public static void processUpdate(string CPDate, string pcode, string dbname, Boolean silentLogging) // will be null if all postcodes to be updated
         {
             common.messageLog(true, false, true, common.pver+"Update processing will mark all data with CodePoint Date " + CPDate);
@@ -221,8 +231,8 @@ namespace CCCodePoint
             {
                 pcode = "";
             }
-            CodePoint db = new CodePoint();              // open the CodePoint database; 
-            CommunityCounts db2 = new CommunityCounts(dbname); // open the Community Counts database
+            CodePoint db = new CodePoint();             // open the CodePoint database; 
+            CommunityCounts db2 = open_CC_DB(dbname);   // open the Community Counts database;
             int CPDateid;
             //
             // process the Code-Point date for this client database
@@ -363,9 +373,11 @@ namespace CCCodePoint
                    
                 }
                 counter++;
-                if ((counter -1) % 100 == 0)
+                if ((counter -1) % 1000 == 0)
                 {
-                    db2.SaveChanges();                                                                               // commit postcode addition or changes
+                    db2.SaveChanges();                              // commit postcode addition or changes
+                    db2.Dispose();                                  // dispose of Community Counts to improve performance
+                    db2 = open_CC_DB(dbname);       // open the Community Counts database;
                     common.messageLog(false,false,false,pcodeBeingProcessed.CPPostCode1+",");
                 }
             }
