@@ -11,7 +11,7 @@ namespace CCCodePoint
 {
     class common
     {
-        public const string pver = "CodePoint V1.0 :";                    // version number issued in all logging statements.
+        public const string pver = "CodePoint V1.1 :";                    // version number issued in all logging statements.
         public static void messageLog(Boolean SystemLog, Boolean init, Boolean cr, String msg)
         {
             //

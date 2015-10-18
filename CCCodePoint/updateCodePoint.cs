@@ -29,6 +29,7 @@ namespace CCCodePoint
                     CountyName = countyData.CPCountyName,
                     idCPDate = idCodePointDate
                 });
+                db2.ChangeTracker.DetectChanges();              // because Configuration.AutoDetectChangesEnabled = false;
                 db2.SaveChanges();
                 idCountyCode = db2.counties.Where(a => a.CountyName == countyData.CPCountyName).First().idCountyListCode;
                 cname = countyData.CPCountyName;
@@ -68,6 +69,7 @@ namespace CCCodePoint
                     Description=districtData.CPDistrictName,
                     idCPDate=idCodePointDate
                 });
+                db2.ChangeTracker.DetectChanges();              // because Configuration.AutoDetectChangesEnabled = false;
                 db2.SaveChanges();
                 idDistrictCode=db2.districts.Where(a=>a.Description==districtData.CPDistrictName).First().idDistrictCode;
                 dname = districtData.CPDistrictName;
@@ -108,6 +110,7 @@ namespace CCCodePoint
                     Description = wardData.CPDistrictWardName,
                     idCPDate = idCodePointDate
                 });
+                db2.ChangeTracker.DetectChanges();              // because Configuration.AutoDetectChangesEnabled = false;
                 db2.SaveChanges();
                 idWardCode = db2.wards.Where(a => a.Description == wardData.CPDistrictWardName).First().idWardCode;
                 wname = wardData.CPDistrictWardName;
@@ -148,6 +151,7 @@ namespace CCCodePoint
                     NHSSHAName = shaData.CPNHSSHAName,
                     idCPDate = idCodePointDate
                 });
+                db2.ChangeTracker.DetectChanges();              // because Configuration.AutoDetectChangesEnabled = false;
                 db2.SaveChanges();
                 idSHACode = db2.nhsshas.Where(a => a.NHSSHAName == shaData.CPNHSSHAName).First().idNHSSHACode;
                 sname = shaData.CPNHSSHAName;
@@ -188,6 +192,7 @@ namespace CCCodePoint
                     NHSPanSHAName = panshaData.CPNHSPanSHAName,
                     idCPDate = idCodePointDate
                 });
+                db2.ChangeTracker.DetectChanges();              // because Configuration.AutoDetectChangesEnabled = false;
                 db2.SaveChanges();
                 idPANSHACode = db2.nhspanshas.Where(a => a.NHSPanSHAName == panshaData.CPNHSPanSHAName).First().idNHSPanSHACode;
                 pname = panshaData.CPNHSPanSHAName;
@@ -214,7 +219,15 @@ namespace CCCodePoint
         {
             //
             // Opens the community counts database context in an efficient manner for mass updating.inserting
-            // 
+            // This is achieved by issuing a dbcontext.Dispose() for every 1000 processed postcodes AND
+            // setting AutoDetectChangesEnabled / ValidateonSaveEnabled as false on the same database.
+            // Using .Dispose() helps as it removes - .SaveChanges() does not - all entries from the context which would remain
+            // in stage Unchanged. This growing list really slowed down Inserts beyond a few thousand records.
+            // Using AutoDetectChangesEnabled as false considerably improves the performance of the same inserts (Adds)
+            // as per https://msdn.microsoft.com/en-us/data/jj556205.aspx
+            // Finally ValidateOnSaveEnabled = false to reduce unnecessary data validation on fields added as all fields are 
+            // validated in the code.
+            //
             CommunityCounts db2 = new CommunityCounts(dbname); // open the Community Counts database
             db2.Configuration.AutoDetectChangesEnabled = false; // performance improvement
             db2.Configuration.ValidateOnSaveEnabled = false;    // performance improvement
@@ -247,6 +260,7 @@ namespace CCCodePoint
                     {
                         CPDate1=CPDate
                     });
+                db2.ChangeTracker.DetectChanges();              // because Configuration.AutoDetectChangesEnabled = false;
                 db2.SaveChanges();
                 var codePointDate = db2.cpdates.Where(a => a.CPDate1 == CPDate).First();     // must be there this time
                 CPDateid = codePointDate.idCPDate;                                          // Get the id for this CodePoint Date.
@@ -378,7 +392,7 @@ namespace CCCodePoint
                     db2.ChangeTracker.DetectChanges();              // because Configuration.AutoDetectChangesEnabled = false;
                     db2.SaveChanges();                              // commit postcode addition or changes
                     db2.Dispose();                                  // dispose of Community Counts to improve performance
-                    db2 = open_CC_DB(dbname);       // open the Community Counts database;
+                    db2 = open_CC_DB(dbname);                       // open the Community Counts database;
                     common.messageLog(false,false,false,pcodeBeingProcessed.CPPostCode1+",");
                 }
             }
